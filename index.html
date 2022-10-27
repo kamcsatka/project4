@@ -4,173 +4,189 @@
 <head>
     <meta charset="utf-8">
     <meta http-equive="X-UA-Compatible" content="IE=edge" />
-    <title>Project 4.2</title>
+    <title>Calculator</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+
 </head>
 
 <body>
-       <div id="container">
-        <button id="1">1</button>
-        <button id="2">2</button>
-        <button id="3">3</button>
-        <button id="4">4</button>
-        <button id="5">5</button>
-        <button id="6">6</button>
-        <button id="7">7</button>
-        <button id="8">8</button>
-        <button id="9">9</button>
-        <button id="0">0</button>
-        <button id=".">.</button>
-        <button id="+">+</button>
-        <button id="-">-</button>
-        <button id="*">*</button>
-        <button id="/">/</button>
-        <button id="=">=</button>
-        <button id="C">C</button>
-        <button id="del">del</button>
+    <div id="container">
+        <div>
+            <button class="buttonl" , id="C">C</button>            
+            <button class="button" , id="del">del</button>
+            <button class="button" , id="/">/</button>
+        </div>
+        <div>
+            <button class="button" , id="9">9</button>
+            <button class="button" , id="8">8</button>
+            <button class="button" , id="7">7</button>
+            <button class="button" , id="*">*</button>
+        </div>
+        <div>
+            <button class="button" , id="6">6</button>
+            <button class="button" , id="5">5</button>
+            <button class="button" , id="4">4</button>
+            <button class="button" , id="-">-</button>
+        </div>
+        <div>
+            <button class="button" , id="3">3</button>
+            <button class="button" , id="2">2</button>
+            <button class="button" , id="1">1</button>
+            <button class="button" , id="+">+</button>
+        </div>
+        <div>
+            <button class="button" , id="0">0</button>
+            <button class="button" , id=".">.</button>
+            <button class="buttonl" , id="=">=</button>
+        </div>
     </div>
 
-    <script>
+        <script>
 
-        const buttons = document.querySelectorAll('button');      
-        const x1 = []; 
-        const z1 = [];
-        var z2;
-        var firstNum = true;
-        var lastOp = false;
-        var x2;
-        const operation = [];
-        const display=[]
-        const start = 1;
-        const deleteCount = 3;
-        const operationText = document.createElement('p');          
+            const buttons = document.querySelectorAll('button');
+            const x1 = [];
+            const z1 = [];
+            var z2;
+            var firstNum = true;
+            var lastOp = false;
+            var x2;
+            const operation = [];
+            const display = [];
+            const start = 1;
+            const deleteCount = 3;
 
-        buttons.forEach((button) => {
-            button.addEventListener('click', () => {
-                if (button.id != 'C' && button.id != 'del') {
-                    display.push(button.id);
-                    operationText.textContent = display.join('');
-                    document.body.appendChild(operationText);
-                }                            
-                if (((+ button.id) < 10 || button.id == '.') && firstNum == true) {
-                    numberOne(button.id);
-                    lastOp = false;
-                }
-                else if (((+ button.id) < 10 || button.id == '.') && firstNum == false) {
-                    numbers(button.id);
-                    lastOp = false;
-                }
-                else if (button.id == '=') {
-                    if (lastOp == true) {
-                        alert('You need to give me a number first, smartass');
-                        display.pop();
+            const operationText = document.createElement('p');
+            operationText.id = "opText";
+
+            buttons.forEach((button) => {
+                button.addEventListener('click', () => {
+                    console.log(button.id);
+
+                    if (button.id != 'C' && button.id != 'del') {
+                        display.push(button.id);
+                        operationText.textContent = display.join('');
+                        document.body.appendChild(operationText);
                     }
-                    else {
+                    if (((+ button.id) < 10 || button.id == '.') && firstNum == true) {
+                        numberOne(button.id);
+                        lastOp = false;
+                    }
+                    else if (((+ button.id) < 10 || button.id == '.') && firstNum == false) {
+                        numbers(button.id);
+                        lastOp = false;
+                    }
+                    else if (button.id == '=') {
+                        if (lastOp == true) {
+                            alert('You need to give me a number first, smartass');
+                            display.pop();
+                        }
+                        else {
+                            operation.push(z2);
+                            operation.push(button.id)
+                            operate(operation[0], operation[1], operation[2]);
+                            display.push(+(Math.round((operation[0]) + "e+2") + "e-2"));
+                            operationText.textContent = display.join('');
+                            clear();
+                        }
+                    }
+                    else if ((button.id == '+' || button.id == '-' || button.id == '*' || button.id == '/') && firstNum == true) {
+                        operation.push(x2);
+                        firstNum = false;
+                        operation.push(button.id);
+                        lastOp = true;
+                    }
+                    else if ((button.id == '+' || button.id == '-' || button.id == '*' || button.id == '/') && firstNum == false) {
                         operation.push(z2);
                         operation.push(button.id)
                         operate(operation[0], operation[1], operation[2]);
-                        display.push(+(Math.round((operation[0]) + "e+2") + "e-2"));
-                        operationText.textContent = display.join('');
-                        clear(); }                  
-                }
-                else if ((button.id == '+' || button.id == '-' || button.id == '*' || button.id == '/') && firstNum == true) {
-                    operation.push(x2);
-                    firstNum = false;
-                    operation.push(button.id);
-                    lastOp = true;
-                }
-                else if ((button.id == '+' || button.id == '-' || button.id == '*' || button.id == '/') && firstNum == false) {
-                    operation.push(z2);
-                    operation.push(button.id)
-                    operate(operation[0], operation[1], operation[2]);
-                    lastOp = true;
-                }
-                else if (button.id == "C") {
-                    clear();
-                    display.splice(0, display.length);
-                }
-                else if (button.id == 'del') {
-                    if (firstNum == true) {
-                        x1.pop();
-                        x2 = x1.join('');
-                        display.pop();
+                        lastOp = true;
                     }
-                    else if (firstNum == false) {
-                        z1.pop();
-                        z2 = z1.join('');
-                        display.pop();
+                    else if (button.id == "C") {
+                        clear();
+                        display.splice(0, display.length);
                     }
-                    else {
-                        operation.pop();
+                    else if (button.id == 'del') {
+                        if (firstNum == true) {
+                            x1.pop();
+                            x2 = x1.join('');
+                            display.pop();
+                        }
+                        else if (firstNum == false) {
+                            z1.pop();
+                            z2 = z1.join('');
+                            display.pop();
+                        }
+                        else {
+                            operation.pop();
+                        }
                     }
-                }
-            });        
-        });
+                });
+            });
 
-        function clear() {
-            operation.splice(0, operation.length);
-            x1.splice(0, x1.length);
-            z1.splice(0, z1.length);
-            display.splice(0, display.length);
-            firstNum = true;
-            x2 = 0;
-            z2 = 0;
-        }
+            function clear() {
+                operation.splice(0, operation.length);
+                x1.splice(0, x1.length);
+                z1.splice(0, z1.length);
+                display.splice(0, display.length);
+                firstNum = true;
+                x2 = 0;
+                z2 = 0;
+            }
 
-        function numberOne(a) {
-            x1.push(a);
-            x2= x1.join('');
-        }
+            function numberOne(a) {
+                x1.push(a);
+                x2 = x1.join('');
+            }
 
-        function numbers(a) {
-            z1.push(a);
-            z2 = z1.join('');
-        }
+            function numbers(a) {
+                z1.push(a);
+                z2 = z1.join('');
+            }
 
-        function addition(a, b) {
-            operation.unshift((+a) + (+b));
-            operation.splice(start, deleteCount);
-            z1.splice(0, z1.length);          
-        }
-
-        function subtraction(a, b) {
-            operation.unshift((+a) - (+b));
-            operation.splice(start, deleteCount);
-            z1.splice(0, z1.length);
-        }
-
-        function multiplication(a, b) {
-            operation.unshift((+a) * (+b));
-            operation.splice(start, deleteCount);
-            z1.splice(0, z1.length);
-        }
-
-        function division(a, b) {
-            if (b == 0) {
-                alert("NO!!!!!!!!!!! BAD!!!!!!!!!!!!!");
-                clear();
-
-            } else {
-                operation.unshift((+a) / (+b));
+            function addition(a, b) {
+                operation.unshift((+a) + (+b));
                 operation.splice(start, deleteCount);
                 z1.splice(0, z1.length);
-            }           
-        }
-
-        function operate(a,b, c) {
-            switch (b) {
-                case '+':
-                    return addition(a, c);
-                case '-':
-                    return subtraction(a, c);
-                case '*':
-                    return multiplication(a, c);
-                case '/':
-                    return division(a, c);
             }
-        }
 
-    </script>
+            function subtraction(a, b) {
+                operation.unshift((+a) - (+b));
+                operation.splice(start, deleteCount);
+                z1.splice(0, z1.length);
+            }
+
+            function multiplication(a, b) {
+                operation.unshift((+a) * (+b));
+                operation.splice(start, deleteCount);
+                z1.splice(0, z1.length);
+            }
+
+            function division(a, b) {
+                if (b == 0) {
+                    alert("NO!!!!!!!!!!! BAD!!!!!!!!!!!!!");
+                    clear();
+
+                } else {
+                    operation.unshift((+a) / (+b));
+                    operation.splice(start, deleteCount);
+                    z1.splice(0, z1.length);
+                }
+            }
+
+            function operate(a, b, c) {
+                switch (b) {
+                    case '+':
+                        return addition(a, c);
+                    case '-':
+                        return subtraction(a, c);
+                    case '*':
+                        return multiplication(a, c);
+                    case '/':
+                        return division(a, c);
+                }
+            }
+
+        </script>
 
 </body>
 </html>
- 

@@ -1,0 +1,54 @@
+
+body {
+	background-image: url('clouds.jpg');
+}
+@font-face {
+	font-family: 'font1';
+	src: url(alloy.ttf) format('truetype');
+}
+* {
+	font-family: 'font1', Wingdings;
+	color: black;
+	text-align: center;
+}
+#container {
+	display: flex;
+	margin-top: 100px;
+	flex-direction: column;
+	align-items: center;
+}
+.button {
+	width: 80px;
+	border-radius: 25px;
+	border: black solid;
+	color: black;
+	padding: 10px 10px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+}
+
+.buttonl {
+	border: black solid;
+	color: black;
+	border-radius: 25px;
+	padding: 10px 10px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	width: 164px;
+}
+#opText {
+	font-size: 18px;
+	margin: auto;
+	margin-top: 10px;
+	padding: 5px;
+	border-radius: 25px;
+	border: 3px solid black;
+	width: 330px;
+	min-height: 40px;
+	background-color: rgb(230, 230, 230);
+	word-wrap: break-word
+}
